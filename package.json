@@ -4,6 +4,7 @@
   "description": "a terminal program entirely created on a cell phone (more that works on any device) that downloads images, and all that is needed is a term and a destination (to save the image)",
   "main": "index.js",
   "scripts": {
+  	"start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Theryston Santos",
@@ -16,7 +17,7 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Theryston/images-for-min.git"
+    "url": "https://github.com/Theryston/images-for-min.git"
   },
   "keywords": [
     "images",
