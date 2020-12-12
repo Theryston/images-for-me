@@ -5,6 +5,7 @@ const customSearch = google.customsearch('v1');
 const download = require('image-downloader');
 var readlineSync = require('readline-sync');
 const path = require('path')
+const fs = require('fs')
 
 
 const googlesearchcredencials = require('./credentials/google-search.json');
@@ -75,11 +76,7 @@ async function downloading(UrlsImgs, index, limit, term, dest) {
 void async function() {
 	var term = readlineSync.question('Enter a term: ')
 
-
-	const {
-		response,
-		items
-	} = await search(term)
+	const {response, items} = await search(term)
 
 	if (items !== 'I did not find images related to this term') {
 		console.log(`Ok! I found ${items.length} images`)
@@ -97,16 +94,20 @@ void async function() {
 
 			limit = readlineSync.question('how many images do you want me to download: ')
 		}
-		
-		var dest = readlineSync.question(`\nEnter the exact destination where the images will be saved.\nExample: /desktop/folder-for-downloaded-images/\nIf you want to download it in the folder you are in, type '.'\ndest: `)
-		
-		
+
+		var dest = readlineSync.question(`\nEnter the exact destination where the images will be saved.\nExample: /desktop/images/\nthere is no need to create the directory! if it does not exist, it will be created automatically.\nif you want to save the image in the current directory, type '.'\ndest: `)
+
+
 		if (dest == '.') {
 			dest = './'
 		}
-		
+
 		if (dest.substring(dest.length-1, dest.length).indexOf('/') == -1) {
 			dest = dest+'/'
+		}
+
+		if (!fs.existsSync(dest)) {
+			fs.mkdirSync(dest)
 		}
 
 		downloading(items, 0, limit, term, dest)
