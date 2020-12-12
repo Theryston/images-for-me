@@ -2,11 +2,11 @@
   "name": "images-for-me",
   "version": "0.0.1",
   "description": "a robot that downloads images, and all it takes is a term and destination to save the images.",
-    "bin" : {
-    	"images-for-min" : "./index.js"
-    },
+  "bin": {
+    "images-for-min": "./index.js"
+  },
   "scripts": {
-  	"start": "node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Theryston Santos",
