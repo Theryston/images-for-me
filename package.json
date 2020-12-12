@@ -1,6 +1,6 @@
 {
   "name": "images-for-me",
-  "version": "0.0.4",
+  "version": "0.0.1",
   "description": "a robot that downloads images, and all it takes is a term and destination to save the images.",
     "bin" : {
     	"images-for-min" : "./index.js"
