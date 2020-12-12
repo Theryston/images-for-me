@@ -1,0 +1,30 @@
+{
+  "name": "images-for-min",
+  "version": "0.0.1",
+  "description": "a terminal program entirely created on a cell phone (more that works on any device) that downloads images, and all that is needed is a term and a destination (to save the image)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Theryston Santos",
+  "license": "MIT",
+  "dependencies": {
+    "googleapis": "^65.0.0",
+    "image-downloader": "^4.0.1",
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Theryston/images-for-min.git"
+  },
+  "keywords": [
+    "images",
+    "download",
+    "terminal"
+  ],
+  "bugs": {
+    "url": "https://github.com/Theryston/images-for-min/issues"
+  },
+  "homepage": "https://github.com/Theryston/images-for-min#readme"
+}
