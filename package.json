@@ -1,5 +1,5 @@
 {
-  "name": "images-for-min",
+  "name": "images-for-me",
   "version": "0.0.4",
   "description": "a robot that downloads images, and all it takes is a term and destination to save the images.",
     "bin" : {
