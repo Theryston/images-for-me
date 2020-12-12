@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const google = require('googleapis').google
 const customSearch = google.customsearch('v1');
 const download = require('image-downloader');
