@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "a robot that downloads images, and all it takes is a term and destination to save the images.",
   "bin": {
-    "images-for-min": "./index.js"
+    "images-for-me": "./index.js",
+    "imagesForMe": "./index.js",
+    "image": "./index.js",
+    "ifm": "./index.js"
   },
   "scripts": {
     "start": "node index.js",
@@ -19,15 +22,18 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/Theryston/images-for-min.git"
+    "url": "https://github.com/Theryston/images-for-me.git"
   },
   "keywords": [
     "images",
     "download",
-    "terminal"
+    "terminal",
+    "robot",
+    "image-robot",
+    "terminal-robot"
   ],
   "bugs": {
-    "url": "https://github.com/Theryston/images-for-min/issues"
+    "url": "https://github.com/Theryston/images-for-me/issues"
   },
-  "homepage": "https://github.com/Theryston/images-for-min#readme"
+  "homepage": "https://github.com/Theryston/images-for-me#readme"
 }

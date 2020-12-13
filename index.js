@@ -6,10 +6,74 @@ const download = require('image-downloader');
 var readlineSync = require('readline-sync');
 const path = require('path')
 const fs = require('fs')
+const package = require('./package.json')
 
 
 const googlesearchcredencials = require('./credentials/google-search.json');
 
+if (process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--version') !== -1 || process.argv.indexOf('version')) {
+	console.log('In version: ' + package.version)
+}
+
+
+async function start() {
+	var term = readlineSync.question('Enter a term: ')
+
+	if (term === '') {
+		console.log(`You haven't entered any terms`)
+		term = readlineSync.question('Enter a term: ')
+	}
+
+	const {response, items} = await search(term)
+
+	if (items !== false) {
+		console.log(`\nOk! I found ${items.length} images`)
+
+		var limit = readlineSync.question('How many images do you want me to download: ')
+
+		if (isNaN(limit)) {
+			console.log('\nYou need to enter a number.')
+
+			limit = readlineSync.question('how many images do you want me to download: ')
+		}
+
+		if (limit === '') {
+			console.log('\nyou have not entered any numbers')
+
+			limit = readlineSync.question('how many images do you want me to download: ')
+		}
+
+		if (Number(limit) > items.length) {
+			console.log('\nThe number of images to be downloaded cannot be greater than the number of images I found')
+
+			limit = readlineSync.question('how many images do you want me to download: ')
+		}
+
+		var dest = readlineSync.question(`\nEnter the exact destination where the images will be saved.\nExample: /desktop/images/\nthere is no need to create the directory! if it does not exist, it will be created automatically.\nif you want to save the image in the current directory, type '.'\ndest: `)
+
+
+		if (dest === '') {
+			dest = './'
+		}
+
+		if (dest == '.') {
+			dest = './'
+		}
+
+		if (dest.substring(dest.length-1, dest.length).indexOf('/') == -1) {
+			dest = dest+'/'
+		}
+
+		if (!fs.existsSync(dest)) {
+			fs.mkdirSync(dest)
+		}
+
+		downloading(items, 0, limit, term, dest)
+
+	} else {
+		console.log('I did not find images related to this term')
+	}
+}
 
 async function search(search) {
 	const response = await customSearch.cse.list({
@@ -32,7 +96,7 @@ async function search(search) {
 		}
 
 	} catch (error) {
-		items = 'I did not find images related to this term'
+		items = false
 		return {
 			response: response,
 			items: items
@@ -70,49 +134,3 @@ async function downloading(UrlsImgs, index, limit, term, dest) {
 		console.log('total images downloaded: '+imgTotals)
 	}
 }
-
-
-
-void async function() {
-	var term = readlineSync.question('Enter a term: ')
-
-	const {response, items} = await search(term)
-
-	if (items !== 'I did not find images related to this term') {
-		console.log(`Ok! I found ${items.length} images`)
-
-		var limit = readlineSync.question('How many images do you want me to download: ')
-
-		if (isNaN(limit)) {
-			console.log('You need to enter a number.')
-
-			limit = readlineSync.question('how many images do you want me to download: ')
-		}
-
-		if (Number(limit) > items.length) {
-			console.log('The number of images to be downloaded cannot be greater than the number of images I found\n')
-
-			limit = readlineSync.question('how many images do you want me to download: ')
-		}
-
-		var dest = readlineSync.question(`\nEnter the exact destination where the images will be saved.\nExample: /desktop/images/\nthere is no need to create the directory! if it does not exist, it will be created automatically.\nif you want to save the image in the current directory, type '.'\ndest: `)
-
-
-		if (dest == '.') {
-			dest = './'
-		}
-
-		if (dest.substring(dest.length-1, dest.length).indexOf('/') == -1) {
-			dest = dest+'/'
-		}
-
-		if (!fs.existsSync(dest)) {
-			fs.mkdirSync(dest)
-		}
-
-		downloading(items, 0, limit, term, dest)
-
-	} else {
-		console.log(items)
-	}
-}()
