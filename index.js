@@ -8,6 +8,7 @@ const path = require('path')
 const fs = require('fs')
 const package = require('./package.json')
 var downloadedImages = []
+const chalk = require('chalk');
 
 
 const googlesearchcredencials = require('./credentials/google-search.json');
@@ -33,7 +34,7 @@ async function start() {
 	} = await search(term)
 
 	if (items !== false) {
-		console.log(`\nOk! I found ${items.length} images`)
+		console.log(chalk.green(`\nOk! I found ${items.length} images`))
 
 		var limit = readlineSync.question('How many images do you want me to download: ')
 
@@ -123,25 +124,25 @@ async function downloading(UrlsImgs, index, limit, term, dest) {
 		if (downloadedImages.indexOf(options.url) === -1) {
 			download.image(options).then(() => {
 				if (index > 0) {
-					console.log('\nAnother downloaded image\nUrl: '+ options.url)
+					console.log(chalk.cyan('\nAnother downloaded image\nUrl: '+ options.url))
 				} else {
-					console.log('\nI downloaded the first image\nUrl: '+options.url)
+					console.log(chalk.cyan('\nI downloaded the first image\nUrl: '+options.url))
 				}
 				imgTotals++
 				downloadedImages.push(options.url)
 
 				downloading(UrlsImgs, index+1, limit, term, dest)
 			}).catch(() => {
-				console.log('\nThere was an error downloading one of the images but I will download another!')
+				console.log(chalk.red('\nThere was an error downloading one of the images but I will download another!'))
 				downloading(UrlsImgs, index+1, limit, term, dest)
 			})
 		} else {
-			console.log(`duplicate image!  I'll download another one!`)
+			console.log(chalk.red(`duplicate image!  I'll download another one!`))
 			downloading(UrlsImgs, index+1, limit, term, dest)
 		}
 
 	} else {
-		console.log('\nPerfect! the limit of images to be downloaded has already been reached\n')
-		console.log('total images downloaded: '+imgTotals)
+		console.log(chalk.green('\nPerfect! the limit of images to be downloaded has already been reached\n'))
+		console.log('total images downloaded: '+chalk.green(imgTotals))
 	}
 }
