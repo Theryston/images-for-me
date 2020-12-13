@@ -11,8 +11,10 @@ const package = require('./package.json')
 
 const googlesearchcredencials = require('./credentials/google-search.json');
 
-if (process.argv.indexOf('-v') !== -1 || process.argv.indexOf('--version') !== -1 || process.argv.indexOf('version')) {
+if (process.argv.indexOf('-v') != -1 || process.argv.indexOf('--version') != -1 || process.argv.indexOf('version') != -1) {
 	console.log('In version: ' + package.version)
+} else {
+	start()
 }
 
 
