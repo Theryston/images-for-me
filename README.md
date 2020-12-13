@@ -21,7 +21,7 @@ Note: the '-g' is essential for you to run the robot in any folder or project.  
 in the example above, it will download the 7 images into the 'images' folder which is located in the current directory.
 
 
-folder where the robot downloaded the images:
+folder where the robot downloaded the [images:](https://github.com/Theryston/images-for-me/tree/master/images)
 
 ![](public/imgs/folder-images.jpg)
 
