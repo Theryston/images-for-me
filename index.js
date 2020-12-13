@@ -7,6 +7,7 @@ var readlineSync = require('readline-sync');
 const path = require('path')
 const fs = require('fs')
 const package = require('./package.json')
+var downloadedImages = []
 
 
 const googlesearchcredencials = require('./credentials/google-search.json');
@@ -26,7 +27,10 @@ async function start() {
 		term = readlineSync.question('Enter a term: ')
 	}
 
-	const {response, items} = await search(term)
+	const {
+		response,
+		items
+	} = await search(term)
 
 	if (items !== false) {
 		console.log(`\nOk! I found ${items.length} images`)
@@ -51,7 +55,7 @@ async function start() {
 			limit = readlineSync.question('how many images do you want me to download: ')
 		}
 
-		var dest = readlineSync.question(`\nEnter the exact destination where the images will be saved.\nExample: /desktop/images/\nthere is no need to create the directory! if it does not exist, it will be created automatically.\nif you want to save the image in the current directory, type '.'\ndest: `)
+		var dest = readlineSync.question(`\nEnter the exact destination where the images will be saved.\nExample: /desktop/images/\nthere is no need to create the directory! if it does not exist, it will be created automatically.\nif you want to save the image in the current directory, type '.'\n\ndest: `)
 
 
 		if (dest === '') {
@@ -116,23 +120,28 @@ async function downloading(UrlsImgs, index, limit, term, dest) {
 	}
 
 	if (index < limit) {
-		download.image(options).then(() => {
-			if (index > 0) {
-				console.log('Another downloaded image')
-			} else {
-				console.log('I downloaded the first image')
-			}
-			imgTotals++
+		if (downloadedImages.indexOf(options.url) === -1) {
+			download.image(options).then(() => {
+				if (index > 0) {
+					console.log('\nAnother downloaded image\nUrl: '+ options.url)
+				} else {
+					console.log('\nI downloaded the first image\nUrl: '+options.url)
+				}
+				imgTotals++
+				downloadedImages.push(options.url)
 
+				downloading(UrlsImgs, index+1, limit, term, dest)
+			}).catch(() => {
+				console.log('\nThere was an error downloading one of the images but I will download another!')
+				downloading(UrlsImgs, index+1, limit, term, dest)
+			})
+		} else {
+			console.log(`duplicate image!  I'll download another one!`)
 			downloading(UrlsImgs, index+1, limit, term, dest)
-		}).catch(() => {
-			console.log('There was an error downloading one of the images but I will download another!\n')
-			downloading(UrlsImgs, index+1, limit, term, dest)
-		})
-
+		}
 
 	} else {
-		console.log('Perfect! the limit of images to be downloaded has already been reached\n')
+		console.log('\nPerfect! the limit of images to be downloaded has already been reached\n')
 		console.log('total images downloaded: '+imgTotals)
 	}
 }
