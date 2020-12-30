@@ -117,7 +117,7 @@ async function downloading(UrlsImgs, index, limit, term, dest) {
 
 	const options = {
 		url: UrlsImgs[index].link,
-		dest: dest+Date.now().toString()+' - '+term+path.extname(UrlsImgs[index].link)
+		dest: dest+Date.now().toString()+'-'+term+path.extname(UrlsImgs[index].link)
 	}
 
 	if (index < limit) {
